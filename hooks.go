@@ -1,5 +1,7 @@
 package logrus
 
+import "errors"
+
 // A hook to be fired when logging on the logging levels returned from
 // `Levels()` on your implementation of the interface. Note that this is not
 // fired in a goroutine or a channel with workers, you should handle such
@@ -29,6 +31,8 @@ func (hooks LevelHooks) Fire(level Level, entry *Entry) error {
 			return err
 		}
 	}
-
 	return nil
 }
+
+// ErrCancel should be returned by hooks that wish to cancel any further processing or printing on a log message.
+var ErrCancel = errors.New("cancel log message")

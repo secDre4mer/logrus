@@ -278,6 +278,9 @@ func (entry *Entry) fireHooks() {
 	entry.Logger.mu.Unlock()
 
 	err := tmpHooks.Fire(entry.Level, entry)
+	if err == ErrCancel {
+		return
+	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to fire hook: %v\n", err)
 	}
