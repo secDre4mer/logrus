@@ -321,12 +321,20 @@ func (entry *Entry) Info(args ...interface{}) {
 	entry.Log(InfoLevel, args...)
 }
 
+func (entry *Entry) Notice(args ...interface{}) {
+	entry.Log(NoticeLevel, args...)
+}
+
 func (entry *Entry) Warn(args ...interface{}) {
 	entry.Log(WarnLevel, args...)
 }
 
 func (entry *Entry) Warning(args ...interface{}) {
 	entry.Warn(args...)
+}
+
+func (entry *Entry) Alert(args ...interface{}) {
+	entry.Log(AlertLevel, args...)
 }
 
 func (entry *Entry) Error(args ...interface{}) {
@@ -362,6 +370,10 @@ func (entry *Entry) Infof(format string, args ...interface{}) {
 	entry.Logf(InfoLevel, format, args...)
 }
 
+func (entry *Entry) Noticef(format string, args ...interface{}) {
+	entry.Logf(NoticeLevel, format, args...)
+}
+
 func (entry *Entry) Printf(format string, args ...interface{}) {
 	entry.Infof(format, args...)
 }
@@ -372,6 +384,10 @@ func (entry *Entry) Warnf(format string, args ...interface{}) {
 
 func (entry *Entry) Warningf(format string, args ...interface{}) {
 	entry.Warnf(format, args...)
+}
+
+func (entry *Entry) Alertf(format string, args ...interface{}) {
+	entry.Logf(AlertLevel, format, args...)
 }
 
 func (entry *Entry) Errorf(format string, args ...interface{}) {
@@ -407,6 +423,10 @@ func (entry *Entry) Infoln(args ...interface{}) {
 	entry.Logln(InfoLevel, args...)
 }
 
+func (entry *Entry) Noticeln(args ...interface{}) {
+	entry.Logln(NoticeLevel, args...)
+}
+
 func (entry *Entry) Println(args ...interface{}) {
 	entry.Infoln(args...)
 }
@@ -417,6 +437,10 @@ func (entry *Entry) Warnln(args ...interface{}) {
 
 func (entry *Entry) Warningln(args ...interface{}) {
 	entry.Warnln(args...)
+}
+
+func (entry *Entry) Alertln(args ...interface{}) {
+	entry.Logln(AlertLevel, args...)
 }
 
 func (entry *Entry) Errorln(args ...interface{}) {

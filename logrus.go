@@ -30,8 +30,12 @@ func ParseLevel(lvl string) (Level, error) {
 		return FatalLevel, nil
 	case "error":
 		return ErrorLevel, nil
+	case "alert":
+		return AlertLevel, nil
 	case "warn", "warning":
 		return WarnLevel, nil
+	case "notice":
+		return NoticeLevel, nil
 	case "info":
 		return InfoLevel, nil
 	case "debug":
@@ -64,8 +68,12 @@ func (level Level) MarshalText() ([]byte, error) {
 		return []byte("debug"), nil
 	case InfoLevel:
 		return []byte("info"), nil
+	case NoticeLevel:
+		return []byte("notice"), nil
 	case WarnLevel:
 		return []byte("warning"), nil
+	case AlertLevel:
+		return []byte("alert"), nil
 	case ErrorLevel:
 		return []byte("error"), nil
 	case FatalLevel:
@@ -82,7 +90,9 @@ var AllLevels = []Level{
 	PanicLevel,
 	FatalLevel,
 	ErrorLevel,
+	AlertLevel,
 	WarnLevel,
+	NoticeLevel,
 	InfoLevel,
 	DebugLevel,
 	TraceLevel,
@@ -100,8 +110,12 @@ const (
 	// ErrorLevel level. Logs. Used for errors that should definitely be noted.
 	// Commonly used for hooks to send errors to an error tracking service.
 	ErrorLevel
+	// AlertLevel level. Used for urgent user messages that should be reviewed.
+	AlertLevel
 	// WarnLevel level. Non-critical entries that deserve eyes.
 	WarnLevel
+	// NoticeLevel level. Entries that are unusual but not necessarily an incident.
+	NoticeLevel
 	// InfoLevel level. General operational entries about what's going on inside the
 	// application.
 	InfoLevel
@@ -144,8 +158,10 @@ type FieldLogger interface {
 	Debugf(format string, args ...interface{})
 	Infof(format string, args ...interface{})
 	Printf(format string, args ...interface{})
+	Noticef(format string, args ...interface{})
 	Warnf(format string, args ...interface{})
 	Warningf(format string, args ...interface{})
+	Alertf(format string, args ...interface{})
 	Errorf(format string, args ...interface{})
 	Fatalf(format string, args ...interface{})
 	Panicf(format string, args ...interface{})
@@ -153,17 +169,21 @@ type FieldLogger interface {
 	Debug(args ...interface{})
 	Info(args ...interface{})
 	Print(args ...interface{})
+	Notice(args ...interface{})
 	Warn(args ...interface{})
 	Warning(args ...interface{})
+	Alert(args ...interface{})
 	Error(args ...interface{})
 	Fatal(args ...interface{})
 	Panic(args ...interface{})
 
 	Debugln(args ...interface{})
 	Infoln(args ...interface{})
+	Noticeln(args ...interface{})
 	Println(args ...interface{})
 	Warnln(args ...interface{})
 	Warningln(args ...interface{})
+	Alertln(args ...interface{})
 	Errorln(args ...interface{})
 	Fatalln(args ...interface{})
 	Panicln(args ...interface{})

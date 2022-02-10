@@ -168,6 +168,10 @@ func (logger *Logger) Infof(format string, args ...interface{}) {
 	logger.Logf(InfoLevel, format, args...)
 }
 
+func (logger *Logger) Noticef(format string, args ...interface{}) {
+	logger.Logf(NoticeLevel, format, args...)
+}
+
 func (logger *Logger) Printf(format string, args ...interface{}) {
 	entry := logger.newEntry()
 	entry.Printf(format, args...)
@@ -180,6 +184,10 @@ func (logger *Logger) Warnf(format string, args ...interface{}) {
 
 func (logger *Logger) Warningf(format string, args ...interface{}) {
 	logger.Warnf(format, args...)
+}
+
+func (logger *Logger) Alertf(format string, args ...interface{}) {
+	logger.Logf(AlertLevel, format, args...)
 }
 
 func (logger *Logger) Errorf(format string, args ...interface{}) {
@@ -226,6 +234,10 @@ func (logger *Logger) Info(args ...interface{}) {
 	logger.Log(InfoLevel, args...)
 }
 
+func (logger *Logger) Notice(args ...interface{}) {
+	logger.Log(NoticeLevel, args...)
+}
+
 func (logger *Logger) Print(args ...interface{}) {
 	entry := logger.newEntry()
 	entry.Print(args...)
@@ -238,6 +250,10 @@ func (logger *Logger) Warn(args ...interface{}) {
 
 func (logger *Logger) Warning(args ...interface{}) {
 	logger.Warn(args...)
+}
+
+func (logger *Logger) Alert(args ...interface{}) {
+	logger.Log(AlertLevel, args...)
 }
 
 func (logger *Logger) Error(args ...interface{}) {
@@ -265,6 +281,10 @@ func (logger *Logger) InfoFn(fn LogFunction) {
 	logger.LogFn(InfoLevel, fn)
 }
 
+func (logger *Logger) NoticeFn(fn LogFunction) {
+	logger.LogFn(NoticeLevel, fn)
+}
+
 func (logger *Logger) PrintFn(fn LogFunction) {
 	entry := logger.newEntry()
 	entry.Print(fn()...)
@@ -277,6 +297,10 @@ func (logger *Logger) WarnFn(fn LogFunction) {
 
 func (logger *Logger) WarningFn(fn LogFunction) {
 	logger.WarnFn(fn)
+}
+
+func (logger *Logger) AlertFn(fn LogFunction) {
+	logger.LogFn(AlertLevel, fn)
 }
 
 func (logger *Logger) ErrorFn(fn LogFunction) {
@@ -312,6 +336,10 @@ func (logger *Logger) Infoln(args ...interface{}) {
 	logger.Logln(InfoLevel, args...)
 }
 
+func (logger *Logger) Noticeln(args ...interface{}) {
+	logger.Logln(NoticeLevel, args...)
+}
+
 func (logger *Logger) Println(args ...interface{}) {
 	entry := logger.newEntry()
 	entry.Println(args...)
@@ -324,6 +352,10 @@ func (logger *Logger) Warnln(args ...interface{}) {
 
 func (logger *Logger) Warningln(args ...interface{}) {
 	logger.Warnln(args...)
+}
+
+func (logger *Logger) Alertln(args ...interface{}) {
+	logger.Logln(AlertLevel, args...)
 }
 
 func (logger *Logger) Errorln(args ...interface{}) {
