@@ -239,7 +239,12 @@ func (entry *Entry) log(level Level, msg string) {
 		newEntry.Caller = getCaller()
 	}
 
-	newEntry.fireHooks()
+	if err := newEntry.fireHooks(); err != nil {
+		if err == ErrCancel {
+			return
+		}
+		fmt.Fprintf(os.Stderr, "Failed to fire hook: %v\n", err)
+	}
 	buffer = bufPool.Get()
 	defer func() {
 		newEntry.Buffer = nil
@@ -268,7 +273,7 @@ func (entry *Entry) getBufferPool() (pool BufferPool) {
 	return bufferPool
 }
 
-func (entry *Entry) fireHooks() {
+func (entry *Entry) fireHooks() error {
 	var tmpHooks LevelHooks
 	entry.Logger.mu.Lock()
 	tmpHooks = make(LevelHooks, len(entry.Logger.Hooks))
@@ -277,13 +282,7 @@ func (entry *Entry) fireHooks() {
 	}
 	entry.Logger.mu.Unlock()
 
-	err := tmpHooks.Fire(entry.Level, entry)
-	if err == ErrCancel {
-		return
-	}
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to fire hook: %v\n", err)
-	}
+	return tmpHooks.Fire(entry.Level, entry)
 }
 
 func (entry *Entry) write() {
